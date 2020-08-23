@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.entity.Person">
+
+	<resultMap id="userInfoMap"  type="com.test.entity.Person">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="age" property="age" />
+	</resultMap>
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column">
+		 id,
+		 name,
+		 age
+	</sql>
+	<select id="testName" parameterType="map" resultMap="userInfoMap">
+		select * from person where name = #{name}
+		<if test="orderBy != null and orderBy.size()!=0">
+			order by<foreach collection="orderBy" item="item" separator=",">${item}</foreach>
+		</if>
+	</select>
+
+	<select id="test" resultMap="userInfoMap">
+		select * from person
+	</select>
+
+</mapper>
